@@ -1,0 +1,241 @@
+I"�=<h2 id="masking-and-indexing">Masking and indexing</h2>
+
+<p><strong>Masking</strong></p>
+<ol>
+  <li>it means manipulating(extract/modify/count) values of array based on some criteria</li>
+  <li>you want to remove all outlier</li>
+  <li>count values greater than some value</li>
+</ol>
+
+<p><strong>Ufunc</strong></p>
+<ol>
+  <li>fast element wise arithmetic operation</li>
+  <li>element wise comparision over arrays</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Comparision operator as ufunc
+# &gt;
+# &lt;
+# &gt;=
+# &lt;=
+# !=
+# ==
+</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[23 16 11 14 22]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># in simple python to find all the element greater than 20 we need to loop over it , but in numoy we can use ufunc
+</span><span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">20</span><span class="p">)</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="c1"># this comparision will work with any dimension of array
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[False False False False]
+ [False False False False]
+ [False False False False]]
+
+[[18  3 17 19]
+ [19 19 14  7]
+ [ 0  1  9  0]]
+
+[[ True False  True  True]
+ [ True  True  True False]
+ [False False False False]]
+</code></pre></div></div>
+
+<h3 id="remark">Remark</h3>
+<ol>
+  <li>here first broadcasting is happening</li>
+  <li>then element wise array comaprision is happening</li>
+</ol>
+
+<p><strong>Rule of broadcasting</strong></p>
+<ul>
+  <li>Rule 1: If the two arrays differ in their number of dimensions, the shape of the one with fewer dimensions is padded with ones on its leading (left) side.</li>
+  <li>Rule 2: If the shape of the two arrays does not match in any dimension, the array with shape equal to 1 in that dimension is stretched to match the other shape.</li>
+  <li>Rule 3: If in any dimension the sizes disagree and neither is equal to 1, an error is raised.</li>
+</ul>
+
+<ol>
+  <li>[1]—&gt;[1,1]—-&gt;[3,4]
+now perform element wise comparision</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># we can do element wise comparision of two array
+# here it is must you have same dimension
+</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="o">==</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([False, False,  True, False,  True])
+</code></pre></div></div>
+
+<h3 id="working-with-boolean-array">Working with Boolean array</h3>
+<ol>
+  <li>array([False, False,  True, False,  True])</li>
+</ol>
+
+<ul>
+  <li>np.sum(), np.any(), and np.all() are differnet from sum(), any(), all() as they cant to parallel processing
+    <ol>
+      <li>to count use np.sum(operation, axis)</li>
+      <li>checking whether any or all the values are true, np.any or np.all:</li>
+    </ol>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Count entries
+</span>    <span class="c1"># how many no are greater than 5
+# dir(np.random)
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
+<span class="n">y</span><span class="o">=</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">3</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[False False False  True  True  True  True]
+4
+
+4
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># are there any value greater than 5
+</span><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">6</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">15</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>True
+True
+False
+</code></pre></div></div>
+
+<h3 id="working-with-bitwise-operator">Working with Bitwise operator</h3>
+<ol>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Python’s bitwise logic operators, &amp;,</td>
+          <td>, ^, and ~.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">((</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">7</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">7</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[0 1 2 3 4 5 6 7 8 9]
+[False False False  True  True  True  True False False False]
+4
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0, 1, 2, 3, 4])
+</code></pre></div></div>
+
+<p>bit wise operator<br />
+    - &amp;	np.bitwise_and	 
+    - |	np.bitwise_or<br />
+    - ^	np.bitwise_xor	<br />
+    - ~	np.bitwise_not</p>
+
+<h1 id="fancy-indexing">Fancy Indexing</h1>
+<ol>
+  <li>Access multiple arraay element at once .print(x[[3,7,2]])</li>
+  <li>Combined Indexing X[2, [2, 0, 1]]</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Access multiple array at once
+</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">rand</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+
+<span class="k">print</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+
+
+
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">[[</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+
+
+
+
+
+<span class="c1"># it works in multidimension also 
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'multidimensional array </span><span class="se">\n</span><span class="s">'</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+
+
+
+<span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'display multiple indexes </span><span class="se">\n</span><span class="s">'</span><span class="p">,</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Combined index</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span><span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[51 92 14 71 60 20 82 86 74 74]
+[71, 86, 14]
+
+
+
+
+[71 86 14]
+
+
+
+
+multidimensional array 
+ [[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+
+
+
+
+display multiple indexes 
+ [ 2  5 11]
+
+
+
+
+Combined index
+ [10  8  9]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+:ET
