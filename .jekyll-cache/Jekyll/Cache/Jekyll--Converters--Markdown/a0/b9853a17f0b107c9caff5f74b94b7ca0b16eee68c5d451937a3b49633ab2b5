@@ -1,0 +1,310 @@
+I"�*<h4 id="table-of-contents">Table of Contents</h4>
+
+<ul>
+  <li><a href="#ML vs Heuritics">ML vs Heuritics</a></li>
+  <li><a href="#Train VS Test">Train VS Test</a></li>
+  <li><a href="#center">Center</a></li>
+  <li><a href="#color">Color</a></li>
+</ul>
+
+<h2 id="ml-vs-heuritics">ML vs Heuritics</h2>
+
+<ul>
+  <li><strong>Heuritcs</strong>
+    <ul>
+      <li>it is a set of instruction which a program executes to get the decision.</li>
+      <li>this will not change according to change in data.</li>
+    </ul>
+  </li>
+  <li><strong>ML</strong>
+    <ul>
+      <li>
+        <p><strong><em>WHAT</em></strong>  here we teaches the program , we provide the data and corrosponding label, ML algo will learn in a way where it find the pattern, that for below features of data, our data belongs to certain category . and later on . when ever machines sees any new data points with similar set of feature, it predicts its class label.</p>
+      </li>
+      <li>
+        <p><strong><em>ERROR</em></strong> this is calculated by finding difference between actual output and predicted output. smaller the error better the model.</p>
+      </li>
+      <li>
+        <p><strong><em>ADVANTAGE</em></strong> as environment get updated, data is changed , we can retrain our model.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="train-vs-test">Train VS Test</h2>
+<ul>
+  <li>the more data , better the model</li>
+  <li>find the label - split data vertically to X, y</li>
+  <li>split data horizontally into two part called  test and train.</li>
+  <li>model.fit (X_train,y_train)</li>
+  <li>y’_test = model.predict(Xtest)</li>
+  <li>error = y-y’</li>
+  <li>accuracy(y_test, y’_test)</li>
+</ul>
+
+<h2 id="overfitting-vs-underfitting">Overfitting Vs underfitting</h2>
+
+<ul>
+  <li><strong><em>Overfitting</em></strong>
+    <ul>
+      <li>when our model tries to cover all points of a dataset.</li>
+      <li>it will create confusion in model , and this leads to wrong prediction.</li>
+      <li>here we have given so many features, now confusion will arise</li>
+    </ul>
+  </li>
+  <li><strong><em>Underfitt</em></strong>
+    <ul>
+      <li>model is not covering majourity of a data set.</li>
+      <li>model is not at all predicting accurately. as it is not covering those feature sets.</li>
+      <li>it happens when we give less no of feature and datapoints to train the model</li>
+    </ul>
+  </li>
+  <li>Example
+    <ul>
+      <li>we need to predict any round shape as ball</li>
+      <li>if we are passing only one feature called shape. model will become underfit and it will predict every round shape as ball. even fruits(Underfitting)</li>
+      <li>now we give features like , round, play= yes , eat= No, radious &lt; 5cm.  now i have given football. the fourth condition will get failed.(Overfitting)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="feature-selection">Feature Selection</h2>
+<ul>
+  <li><strong><em>Why</em></strong>
+    <ul>
+      <li>useless features used in training will cause overfitting, training time will increase, complexity of model will increase.</li>
+      <li>one relevant features can imporove the model drastically , and it will make model very less complex</li>
+    </ul>
+  </li>
+  <li><strong><em>How</em></strong>
+    <ul>
+      <li><strong>Filter Method</strong>(check relavance )
+        <ul>
+          <li>
+            <p>Information gain</p>
+          </li>
+          <li>Chi -Squre test</li>
+          <li>Co-relation Coefficient
+            <ul>
+              <li>we check how frquently lable is varying with changes in feature.</li>
+              <li>exmaple , roll no vs prediction of result</li>
+              <li>study hours vs prediction of result</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><strong>Wrapper Method</strong>(check usefullness)
+        <ul>
+          <li>Recursive feature seletion
+            <ul>
+              <li>here we will pick and send all feature one by one to model, and measure the accuracy for each feature.</li>
+              <li>which ever feature has highest accuracy , we will pick it and send other features as a group of two. do this  with all feature and measure the accuracy .</li>
+              <li>like wise continue the process , upto your satisfaction of accuracy.</li>
+            </ul>
+          </li>
+          <li>Recursive feature elemination</li>
+          <li>Generic algorithm</li>
+        </ul>
+      </li>
+      <li><strong>Embedded Method</strong>(Overfitting is very less)
+        <ul>
+          <li>decision Tree</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="model-hierarchy">Model Hierarchy</h2>
+
+<ul>
+  <li>supervised (class label given)
+    <ul>
+      <li>classification
+        <ul>
+          <li>binary</li>
+          <li><a href="https://towardsdatascience.com/multi-class-classification-one-vs-all-one-vs-one-94daed32a87b">multi_class</a>
+            <ul>
+              <li>one vs all</li>
+              <li>one vs one</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>regression</li>
+    </ul>
+  </li>
+  <li>un Supervised(label not give)
+    <ul>
+      <li>clusterring</li>
+    </ul>
+  </li>
+  <li>reinforcement(reward points)</li>
+</ul>
+
+<p><strong>Multiclass classifier</strong></p>
+<ol>
+  <li>One Vs All(one vs rest)
+    <ul>
+      <li>lets say we wanna predict on three fruits (apple, orange, banana)</li>
+      <li>genreate as many classifier , as much we have classes</li>
+      <li>if i have three class, i need to create three classifier, and for this i need to create three train dataset.</li>
+      <li>for 1st data set, we will predict is it orange or not so we will re-write the label , and keep orange as 1 and rest as 0</li>
+      <li>2nd data set we will predict its apple or not so we will re-write the label , and keep apple as 1 and rest as 0</li>
+      <li>3rd data set we will predict its banana or not so we will re-write the label , and keep banana as 1 and rest as 0</li>
+      <li>Now test tuple will be assign to all three model , which ever model proababilty prediction is greater we will assign that result.</li>
+    </ul>
+  </li>
+  <li>One vs one
+    <ul>
+      <li>we need to generate n*(n-1) / 2 classifier. it mean we will create as many pairs of classes for a multiclass label.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="feature-engineering">Feature Engineering</h2>
+
+<ul>
+  <li>Dimensionality Reduction
+    <ul>
+      <li>PCA</li>
+      <li>TSNE</li>
+    </ul>
+  </li>
+  <li>Vectorization
+    <ul>
+      <li>Numerical
+        <ul>
+          <li>Normalization</li>
+          <li>standardization</li>
+        </ul>
+      </li>
+      <li>Categorical
+        <ul>
+          <li>one-hot encoding</li>
+        </ul>
+      </li>
+      <li>oridinal</li>
+      <li>Textual
+        <ul>
+          <li>BAW</li>
+          <li>TF/IDF</li>
+          <li>AVG-TF/IDF</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>PCA- Principal Componant Analysis</strong></p>
+<ul>
+  <li><strong><em>Why</em></strong>
+    <ul>
+      <li>to handle overfitting as too many features are present in model</li>
+      <li>how are we reducing the dimension(features),here we will try to find a new eign-vector, with new eign values by changing the views (eign- vector)</li>
+      <li>here we find principal componant(Eign vector), no of PC are less than or equal to no of attribute.</li>
+      <li>the best eign vector is always 1</li>
+      <li>PC1 and PC2 are always orthagonal , mean independent with each other.</li>
+    </ul>
+  </li>
+  <li><strong><em>How</em></strong>
+  <img src="images/_1_PCA_part1.png" alt="first calcualte covariance matrix" title="first calcualte covariance matrix" />
+  <img src="images/_2_PCA_part2.png" alt="determinant eign value eign vectore" /></li>
+</ul>
+
+<h2 id="data-pre--processing">Data pre- processing</h2>
+
+<ol>
+  <li>Data Cleaning
+    <ul>
+      <li>Handle outlier</li>
+      <li>Handle Duplicates</li>
+      <li>Handle Missing value</li>
+      <li>Handle Time series</li>
+    </ul>
+  </li>
+  <li>Analysis of features
+    <ul>
+      <li>Check distribution of data how much its is skewed</li>
+      <li>analyse how each feature is identifying the class label</li>
+      <li>analyse how features are distributed to understand the linearity. this will help to choose best model by knowing if its linearly saperable or not.</li>
+    </ul>
+  </li>
+  <li>statistical analysis
+    <ul>
+      <li>univariant
+        <ul>
+          <li>we use charts to understand the distribution of single feature for stattistical analysis.</li>
+        </ul>
+      </li>
+      <li>Bi variant
+        <ul>
+          <li>we draw charts using feature with label, to understand the variance and distribution</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="generalization-error">Generalization Error</h2>
+<ul>
+  <li>Bias variance trade-off</li>
+  <li>Overfitting
+    <ul>
+      <li><strong>What</strong>
+        <ul>
+          <li>model is biased .</li>
+        </ul>
+      </li>
+      <li><strong>How to fix</strong>
+        <ul>
+          <li>reduce dimension
+            <ul>
+              <li>dimansionality reduction</li>
+              <li>feature selection</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Underfitting
+    <ul>
+      <li><strong>What</strong>
+        <ul>
+          <li>model has variace .
+  -<strong>How to fix</strong></li>
+          <li>add more no of datapoints</li>
+          <li>add more relevant features</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="svmsupport-vector-machine">SVM(Support vector machine)</h2>
+<ol>
+  <li>Supervised learning</li>
+  <li>used for both classification and regression ?</li>
+  <li>
+    <p>will it work for Linear and non linear data set ?</p>
+  </li>
+  <li>Here we create a <strong>decision boundary</strong> or hyper plane. one side of this boundary is class 1 and other side is class 2</li>
+  <li>we will draw two more plane which are parallel to hyper palne and passing thorugh the nearest -ve class poin and +ve class points.</li>
+  <li>support vectors are those points from which the scondary lines are passing.</li>
+  <li>d+ and d- is the distnace between the hyper plane and support vector</li>
+  <li>sum of d+ and d- is called range.</li>
+  <li><strong><em>Hyper plan is that plane where the range is maximum.</em></strong></li>
+  <li>how to use SVM in Non linear data
+    <ul>
+      <li>kernal function is used to deal with non -linear dataset</li>
+      <li>kernal function takes low dimensional feature space and convert into high dimensional feature space.</li>
+      <li>low dimension features space mean , feature can not be divided using straight line</li>
+      <li>convert low D  to higher D space to easily saperate the data set</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+:ET

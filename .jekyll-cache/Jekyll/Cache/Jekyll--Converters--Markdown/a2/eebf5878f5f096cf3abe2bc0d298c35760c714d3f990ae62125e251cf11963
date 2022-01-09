@@ -1,0 +1,334 @@
+I"M9<h2 id="data-preperation-and-feature-engineering">Data preperation and feature engineering</h2>
+
+<p><a href="https://developers.google.com/machine-learning/data-prep">refrred from</a><br />
+<strong>Why to learn this</strong></p>
+<ul>
+  <li>Incorrect data can confuse the model, which lead to wrong prediction</li>
+  <li>simple model with large and quality data can lead to better prediction</li>
+</ul>
+
+<p><strong>Process</strong></p>
+<ol>
+  <li>define an ML problem and propose a solution</li>
+  <li><strong>Construct your dataset</strong>
+    <ul>
+      <li>Collect raw data</li>
+      <li>Identify feature and label sources</li>
+      <li>select a sampling stretegy</li>
+      <li>Split the data</li>
+    </ul>
+  </li>
+  <li><strong>Trasnform data</strong>
+    <ul>
+      <li>Explore and clean your data</li>
+      <li>Feature Engineering</li>
+    </ul>
+  </li>
+  <li>train a model</li>
+  <li>use model to make prediction</li>
+</ol>
+
+<h3 id="collecting-data">Collecting Data</h3>
+
+<blockquote>
+  <p>Your friend Sam is excited about the initial results of his statistical analysis.
+ He says that the data show a positive correlation between the number of app downloads and
+ the number of app review impressions. But he’s not sure whether they would have downloaded it anyway
+ without seeing the review. What response would be most helpful to Sam?</p>
+</blockquote>
+
+<ul>
+  <li>lets compare similar user set, of formar one who have seen the review and downloaded the app with the later one  Who have downloaded the app with out observing the reviews. Now compare the frequency of download, this will atleast make us sure that yes correlation is true.</li>
+</ul>
+
+<ol>
+  <li><strong>Size and Quality of dataset</strong>
+    <ul>
+      <li>Simple models on large data sets generally beat fancy models on small data sets.</li>
+      <li>It’s no use having a lot of data if it’s bad data; quality matters, too. But what counts as “quality”?</li>
+      <li>the data is good if it accomplishes its intended task.</li>
+      <li>Certain aspects of quality tend to correspond to better-performing models:
+        <ul>
+          <li>reliability
+            <ul>
+              <li>it means can you trust your data source.</li>
+              <li>few points which helps to boost reliability on data are :
+                <ul>
+                  <li>How common are label errors? For example, if your data is labeled by humans, sometimes humans make mistakes.</li>
+                  <li>Are your features noisy? presence of outlier in features beacuse of faulty instrument.</li>
+                  <li>Is the data properly filtered for your problem? Keep only relevent data in data set , like for spam detection you  need search queries by bots. but if we want to recomment search results , we dont need queries which bots use, instead we need voacabulary which human can use.</li>
+                </ul>
+              </li>
+              <li>What can make a data unreliable
+                <ul>
+                  <li>missing data for any feature</li>
+                  <li>duplicate data</li>
+                  <li>false label</li>
+                  <li>outlier in feature value.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>feature representation
+            <ul>
+              <li>How can you map your data to useful representation.
+                <ul>
+                  <li>it mean in which format you are passing your data to model</li>
+                  <li>Should you normalize numerical value</li>
+                  <li>how to handle outlier</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>minimizing skew(not similar)
+            <ul>
+              <li>What is Skew ?
+                <ul>
+                  <li>lets say you get good result in training and testing. but in live environment results are not holding up. <strong>Where can be problem</strong>.</li>
+                  <li>This problem suggests training/serving skew—that is, different results are computed for your metrics at training time vs. serving time.</li>
+                </ul>
+              </li>
+              <li>How to overcome this ?
+                <ul>
+                  <li>Always consider what data is available to your model at prediction time.</li>
+                  <li>During training, use only the features that you’ll have available in serving,</li>
+                  <li>make sure your training set is representative of your serving traffic.</li>
+                </ul>
+              </li>
+              <li>Example
+                <ul>
+                  <li>Suppose you have an online store and want to predict how much money you’ll make on a given day. Your ML goal is to predict daily revenue using the number of customers as a feature. What problem might you encounter? Click the plus icon to check your answer.
+                    <blockquote>
+                      <p>The problem is that you don’t know the number of customers at prediction time, before the day’s sales are complete. So, this feature isn’t useful, even if it’s strongly predictive of your daily revenue. Relatedly, when you’re training a model and get amazing evaluation metrics (like 0.99 AUC), look for these sorts of features that can bleed into your label.</p>
+                    </blockquote>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Joining Data Logs</strong>
+    <ol>
+      <li>
+        <p><strong>type of data logs</strong></p>
+
+        <ul>
+          <li>When assembling a training set, you must sometimes join multiple sources of data.
+            <ul>
+              <li>Transactional log</li>
+              <li>attribute data</li>
+              <li>aggregate statistics</li>
+            </ul>
+          </li>
+          <li>Transactional logs
+            <ul>
+              <li>we always Record specefic event. like when/who, why  it happened</li>
+              <li>it record transactional event for example it contain ip address, date, time at which some specefic event hasbeen performed</li>
+            </ul>
+          </li>
+          <li>attribute data
+            <ul>
+              <li>transactional data deal with specefic moment, it deal with range of time.</li>
+              <li>attribute data and transactional log are related.</li>
+              <li>
+                <p>this is also not of specefic event, it contain informationa about event.</p>
+              </li>
+              <li>it contain demography of user/ search history of user .</li>
+            </ul>
+          </li>
+          <li>aggregate statistics
+            <ul>
+              <li>create a single feature by aggregating  many transactional log</li>
+              <li>we can join multiple transactional log and create some aggregate feature, like active time of user, this can be created by aggegating and finding average login time.</li>
+              <li>frequency of user query</li>
+              <li>average click rate on certain ad</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Joining log sources</strong></p>
+
+        <ul>
+          <li>Leverage the user’s ID and timestamp in transactional logs to look up user attributes at time of event.</li>
+          <li>Use the transaction timestamp to select search history at time of query.</li>
+        </ul>
+
+        <blockquote>
+          <p>It is critical to use event timestamps when looking up attribute data. If you grab the latest user attributes, your training data will contain the values at the time of data collection, which causes training/serving skew. If you forget to do this for search history, you could leak the true outcome into your training data!</p>
+        </blockquote>
+
+        <ul>
+          <li></li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Prediction of data source</strong></p>
+        <ul>
+          <li>you can featch data in two mode</li>
+          <li>online mode
+            <ul>
+              <li>latency is always a oncern. so system must generate the input quickly.</li>
+            </ul>
+          </li>
+          <li>offline mode
+            <ul>
+              <li>You likely have no compute restrictions, so can do similarly complex operations as training data generation.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <blockquote>
+          <p>For example, attribute data frequently needs to be looked up from some other system, which could introduce latency concerns. Similarly, aggregated statistics can be expensive to compute on the fly. If latency is a blocker, one possibility is to precompute these statistics.</p>
+        </blockquote>
+      </li>
+    </ol>
+  </li>
+  <li><strong>Identifying Label and sources</strong>
+    <ul>
+      <li>labelling your data is always challanging. you have to do it manually. now let say i give you sample of email. and our objective is predictin weather its s spam or important</li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li>the first thing is know your objective</li>
+  <li>i can read attribute like mail subject. now if i look the past behaviour of user, he has treated such subject lines as spam.</li>
+  <li>
+    <p>so that mail will be categorized as spam.</p>
+
+    <ol>
+      <li>There are two type of label
+        <ul>
+          <li>direct label</li>
+          <li>derived label</li>
+        </ul>
+
+        <p>for example - objective - check if user is fan of actor</p>
+        <ul>
+          <li>direct label : are you a fan of actor.</li>
+          <li>indirect label : how many movies a user as seen of an actor.</li>
+          <li>how many clicks user has done on actor clip</li>
+        </ul>
+      </li>
+      <li>label sources
+        <ul>
+          <li>Event - it is an action</li>
+          <li>
+            <p>attribute- here we have to check the past behaviour</p>
+          </li>
+          <li>for event we can ask the user directly about there feed back</li>
+          <li>for attribute we have to measure the past behaviour. (here we already need supervised learning for setting the data.)</li>
+        </ul>
+      </li>
+      <li>
+        <p>What if You Don’t Have Data to Log?
+  Perhaps your product doesn’t exist yet, so you don’t have any data to log. In that case, you could take one or more of the following actions:</p>
+
+        <ul>
+          <li>Use a heuristic for a first launch, then train a system based on logged data.</li>
+          <li>Use logs from a similar problem to bootstrap your system.</li>
+          <li>Use human raters to generate data by completing tasks.</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="sampling-and-splitting-of-data">Sampling and Splitting of data</h2>
+
+<ul>
+  <li>During EDA you have to understand the distribution of your data why?
+    <ul>
+      <li>it will helps to know if its uniform, time variant</li>
+      <li>to know if any outlier is present.</li>
+      <li>to understand the balancing of data, if it is balanced or skewed to certain labels.</li>
+    </ul>
+  </li>
+  <li>What to do if too much data is in hand.
+    <ul>
+      <li>you have to select features based on objective</li>
+      <li>for a particular feature you have to select the data events(row/data point).</li>
+      <li>now if you check the detribution and found some outlier/ rare events . you can decide to filter them .</li>
+      <li>this filtering may cause generalisation error, as when ever your model in real world sees those rare events, it will predict them wrong.</li>
+    </ul>
+  </li>
+  <li>what to do if you have very less data.
+    <ul>
+      <li>go with heuristic first and then collect more data.</li>
+    </ul>
+  </li>
+  <li>What to do if you have imbalanced data set
+    <ul>
+      <li>majority class</li>
+      <li>minority class</li>
+      <li><a href="https://towardsdatascience.com/how-to-deal-with-imbalanced-data-34ab7db9b100">How to deal with imbanalnced dataset</a>
+        <ul>
+          <li>up sampling
+            <ul>
+              <li>adding duplicate entries</li>
+            </ul>
+          </li>
+          <li>down sampling
+            <ul>
+              <li>take random data from majority class</li>
+            </ul>
+          </li>
+          <li>up-weighting
+            <ul>
+              <li>adding weights to your majority class label after doing downsampling and when calculating accuracy use it.</li>
+              <li>take probability score instead.</li>
+            </ul>
+          </li>
+          <li>change performance matric from accuracy . calculate confusion matrix and work on precision tp/all predicted positive , recall : tp/all actual positve , F1 score</li>
+          <li>use decision tree algorithm , 
+      1. you can train your model with minority class. and if its predicts them right its is working .</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>How to split
+    <ul>
+      <li>Random split , if data is not changing over time</li>
+      <li>
+        <p>split based on time, example analyse news sample.</p>
+      </li>
+      <li>where not to do random sampling
+        <ul>
+          <li>time serires
+            <blockquote>
+              <p>Random splitting divides each cluster across the test/train split, providing a “sneak preview” to the model that won’t be available in production.</p>
+            </blockquote>
+          </li>
+          <li>grouping data
+            <blockquote>
+              <p>The test set will always be too similar to the training set because clusters of similar data are in both sets. The model will appear to have better predictive power than it does.</p>
+            </blockquote>
+          </li>
+          <li>Data with burstiness (data arriving in intermittent bursts as opposed to a continuous stream)</li>
+        </ul>
+
+        <blockquote>
+          <p>Clusters of similar data (the bursts) will show up in both training and testing. The model will make better predictions in testing than with new data.</p>
+        </blockquote>
+      </li>
+      <li>Need to create three sets
+        <ul>
+          <li>train</li>
+          <li>evaluate</li>
+          <li>test</li>
+          <li>we can use crosse validation in training set</li>
+          <li>make sure , when we are doing vectorization of data, do it saperately for train and test data. even normaliation also .</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Transform your data 
+</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,321 @@
+I"�*<h2 id="objective">Objective</h2>
+<p><strong>Definition</strong>
+Machine Learning changes the way you think about a problem. The focus shifts from a mathematical science to a natural science, running experiments and using statistics, not logic, to analyse its results.</p>
+
+<h2 id="ml-process">ML Process</h2>
+<ol>
+  <li>Define a ML problem and propose a solution
+    <ul>
+      <li>Articulate your problem</li>
+      <li>See if any labeled data exist</li>
+      <li>Design data for model</li>
+      <li>Determines where data come from</li>
+      <li>Determine easily obtained inputs</li>
+      <li>Determine quantifiable output</li>
+    </ul>
+  </li>
+  <li>Construct your dataset</li>
+  <li>Transform Data</li>
+  <li>Train your model</li>
+  <li>Use model to make prediction</li>
+</ol>
+
+<h2 id="ml--terminologies">ML  Terminologies</h2>
+<h4 id="common-ml-problem">Common ML Problem</h4>
+<ol>
+  <li>Supervised
+    <ul>
+      <li>labeled training data</li>
+      <li>express pattern as function
+        <ul>
+          <li>classification</li>
+          <li>regression</li>
+          <li>structured output(image recognition)</li>
+          <li>ranking (search result ranking)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Unsupervised
+    <ul>
+      <li>unlabeled training data</li>
+      <li>we find clusters in data, and then labelled them .
+        <ul>
+          <li>Clustering</li>
+          <li>Association rule learning (recommandation)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Reinforcement
+    <ul>
+      <li>here machine will award some point when ever machine will predict correctly.</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="data-set">Data Set</h4>
+<ol>
+  <li>Features (X)</li>
+  <li>Label (Y)</li>
+  <li>model - which determines the relationship between features and label.</li>
+  <li>bias - some pattern which we dont want to learn, incorrect pattern, error.</li>
+</ol>
+
+<h3 id="how-to-handle-a-problem">How to handle a problem</h3>
+<ol>
+  <li>Models mistake are difficult to debug. as it can be any of below reason
+    <ul>
+      <li>Skewed training data</li>
+      <li>unexpected interpretataion of data during training time.</li>
+      <li>users are handling product in other than prescribe way.</li>
+    </ul>
+  </li>
+  <li>How to address challanges of transition to ML</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>Step</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1. Set the research goal.</td>
+      <td>I want to predict how heavy traffic will be on a given day.</td>
+    </tr>
+    <tr>
+      <td>2. Make a hypothesis.</td>
+      <td>I think the weather forecast is an informative signal.</td>
+    </tr>
+    <tr>
+      <td>3. Collect the data.</td>
+      <td>Collect historical traffic data and weather on each day.</td>
+    </tr>
+    <tr>
+      <td>4. Test your hypothesis.</td>
+      <td>Train a model using this data.</td>
+    </tr>
+    <tr>
+      <td>5. Analyze your results.</td>
+      <td>Is this model better than existing systems?</td>
+    </tr>
+    <tr>
+      <td>6. Reach a conclusion.</td>
+      <td>I should (not) use this model to make predictions, because of X, Y, and Z.</td>
+    </tr>
+    <tr>
+      <td>7. Refine hypothesis and repeat.</td>
+      <td>Time of year could be a helpful signal.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>challanges in ML problem</strong></p>
+<ol>
+  <li>What is the problem , then check how ML can help you.</li>
+  <li>Exploratory data analysis can help you understand your data.</li>
+  <li>collect the data, thousand of sample for ML models and hundreds of thusand of sample for neural networks.</li>
+  <li>Predictive power depends on features.
+    <ul>
+      <li>You should not try to make ML do the hard work of discovering which features are relevant for you. If you simply throw everything at the model and see what looks useful, your model will likely wind up overly complicated, expensive, and filled with unimportant features.</li>
+      <li>perform inferential statistics for smaller datasets.</li>
+    </ul>
+  </li>
+  <li>Aim to make decision , from the prediction.
+    <ul>
+      <li>like recommanded system once recommend something, you have to provide the link for recommendation.</li>
+      <li>show ads only when probability of click is greater than threshold.</li>
+    </ul>
+  </li>
+  <li>define cluster name</li>
+  <li>what will happen if a new data comes in production what to do then.</li>
+  <li>ML models are not always good, heauristic(if /else ) approach can fix anamolies detection easily</li>
+  <li>there is diffrence between corelation and causation
+    <ul>
+      <li>coorelation mean , how one feature is changing according to the change in other feature</li>
+      <li>caustion mean , change is one fature is causing change in other feature.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>10 - Challanges in data gathering</p>
+<blockquote>
+  <p>Your model can make predictions at either of two points:<br />
+        In real time, in response to user activity (online).<br />
+        As a batch and then cached (offline).</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- What data does your code have access to when it needs to call the model?
+- What are your latency requirements? Do you need to run quickly to avoid lagging in your UI, or are you running without a user waiting for your model?
+-  be wary of using out-of-date data. 
+</code></pre></div></div>
+
+<p><strong>Approach for implementing ML</strong></p>
+<ol>
+  <li>Objective - what would you like your ML model to do?
+ some time a related but indirect goal can help to realise main goal.
+    <ul>
+      <li>We want the ML model to predict how popular a video just uploaded will become in the future.</li>
+      <li>indirect goal - predict the share count , and predict the watch time.</li>
+    </ul>
+  </li>
+  <li>Your IDEAL outcome Decision - what should your model do after predicting, what is the outcome.
+    <ul>
+      <li>here we want to recommend only those videos which are worthtime of users.</li>
+    </ul>
+  </li>
+  <li>Design an approach-(look for feature needed for trainng)
+    <ul>
+      <li>for above problem , we want to collect “category of video” and there “watched time”, “click count”.</li>
+    </ul>
+  </li>
+  <li>Success or failure metric
+    <ul>
+      <li>define which metric you will choose
+        <ul>
+          <li>precision /recall/AUC(Area under ROC curve)(Receiver operating chracterstic curve).</li>
+        </ul>
+      </li>
+      <li>quantify the metric
+        <ul>
+          <li>how much presion value mean success/failure.</li>
+        </ul>
+      </li>
+      <li>you should know other factors which can fail the model
+        <ul>
+          <li>availabilty of data to model</li>
+          <li>latancy in data availbilty</li>
+          <li>very old data is trained</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>you should be aware which ML algo to use for what type of problem</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type of ML Problem</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Classification</td>
+      <td>Pick one of N labels</td>
+      <td>cat, dog, horse, or bear</td>
+    </tr>
+    <tr>
+      <td>Regression</td>
+      <td>Predict numerical values</td>
+      <td>click-through rate</td>
+    </tr>
+    <tr>
+      <td>Clustering</td>
+      <td>Group similar examples</td>
+      <td>most relevant documents (unsupervised)</td>
+    </tr>
+    <tr>
+      <td>Association rule learning</td>
+      <td>Infer likely association patterns in data</td>
+      <td>If you buy hamburger buns, you’re likely to buy hamburgers (unsupervised)</td>
+    </tr>
+    <tr>
+      <td>Structured output</td>
+      <td>Create complex output</td>
+      <td>natural language parse trees, image recognition bounding boxes</td>
+    </tr>
+  </tbody>
+</table>
+
+<ol>
+  <li>you should know what to do with predicted outcome</li>
+</ol>
+
+<h2 id="exercise1">Exercise1</h2>
+<p><img src="r&quot;C:\Users\04136O744\Desktop\DataScience\MachineLearning\image\how to approach ML problem.pdf&quot;" alt="project link" /></p>
+
+<h2 id="formulate-your-ml-problem">Formulate your ML problem</h2>
+<p>This section is a guide to the suggested approach for framing an ML problem:</p>
+
+<ol>
+  <li>Articulate your problem.
+    <ul>
+      <li>supervised
+        <ul>
+          <li>classification
+            <ul>
+              <li>binary class classificaiton</li>
+              <li>multi class classification
+                <ul>
+                  <li>Multiclass single label(which animal is in picture)</li>
+                  <li>multiclass multilabel (all animal in pictture)</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>regression
+            <ul>
+              <li>uni-dimensional regression ( hight of player)</li>
+              <li>multi-dimensional regression (predict longitude/latitude)</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>unsupervised
+        <ul>
+          <li>association rule(recommending similar type)</li>
+          <li>clustering</li>
+        </ul>
+      </li>
+      <li>reinforcement</li>
+    </ul>
+  </li>
+  <li>Start simple.
+    <ul>
+      <li>Simplify your modeling task means try to do it using binary classification or uni dimensional regression</li>
+      <li>apply the simplest algorithm possible, as you will know from the scratch if simple theorem can fix this or not.complex models are hard to debug.</li>
+      <li>start from only 1- 3 features to do the prediction .</li>
+    </ul>
+  </li>
+  <li>Identify Your Data Sources.
+    <ul>
+      <li>how much labelled data you have</li>
+      <li>what is the source of labelled data.</li>
+      <li>are labelled closelly related to the decision you are trying to make(not prediction)</li>
+    </ul>
+  </li>
+  <li>Design your data for the model.
+    <ul>
+      <li>find the best possible features and label.</li>
+    </ul>
+  </li>
+  <li>Determine where data comes from.
+    <ul>
+      <li>Assess how much work is needed to develop a pipeline.</li>
+      <li>assess what will happen in case output from pipeline is available.</li>
+    </ul>
+  </li>
+  <li>Determine easily obtained inputs.
+    <ul>
+      <li>use 1-3 feautres which are available.</li>
+    </ul>
+  </li>
+  <li>Ability to Learn.
+    <ul>
+      <li><strong>unbalance dataset</strong> The data set doesn’t contain enough positive labels.</li>
+      <li><strong>less datapoint</strong> The training data doesn’t contain enough examples.</li>
+      <li><strong>outlier</strong> The labels are too noisy.</li>
+      <li><strong>baised error</strong> The system memorizes the training data, but has difficulty generalizing to new cases.</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+:ET
